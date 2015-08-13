@@ -1,0 +1,5 @@
+1 + 1(int) 2
+
+Math.pow(2, 3)(double) 8.0
+
+pucrs.alpro3lm.recursividade.Math.factorial(7)(int) 5040(int) 6
