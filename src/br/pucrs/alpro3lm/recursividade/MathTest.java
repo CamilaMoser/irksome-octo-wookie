@@ -1,4 +1,4 @@
-package pucrs.alpro3lm.recursividade;
+package br.pucrs.alpro3lm.recursividade;
 
 import static org.junit.Assert.*;
 

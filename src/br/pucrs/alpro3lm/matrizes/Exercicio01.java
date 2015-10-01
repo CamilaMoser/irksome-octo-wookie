@@ -1,8 +1,8 @@
-package pucrs.alpro3lm.matrizes;
+package br.pucrs.alpro3lm.matrizes;
 
 public class Exercicio01 {
 
-	// Implemente um método ou “main” que:
+	// Implemente um método ou “main�? que:
 	// ◦ Crie uma matriz 5X6 (5 "linhas" e 6 "colunas")
 	// ◦ Inicialize cada posição com o valor da soma da
 	// coordenada de sua linha com a coordenada de sua

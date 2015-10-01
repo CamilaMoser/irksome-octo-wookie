@@ -1,7 +1,7 @@
 /*
  * 
  */
-package pucrs.alpro3lm.ordenacao;
+package br.pucrs.alpro3lm.ordenacao;
 
 import java.util.Arrays;
 

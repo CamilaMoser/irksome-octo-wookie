@@ -1,4 +1,4 @@
-package pucrs.alpro3lm.matrizes;
+package br.pucrs.alpro3lm.matrizes;
 
 public class Exercicio02 {
 
