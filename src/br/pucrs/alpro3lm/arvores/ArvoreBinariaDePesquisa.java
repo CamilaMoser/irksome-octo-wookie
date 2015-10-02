@@ -31,11 +31,15 @@ public class ArvoreBinariaDePesquisa {
 		if (nodo == null)
 			return new Nodo(chave);
 
-		if (chave < nodo.chave)
+		if (chave < nodo.chave) {
 			nodo.esquerdo = inserir0(nodo.esquerdo, chave);
-		else if (chave > nodo.chave)
+			// TODO: verificar se houve desequilï¿½brio
+			// TODO: realizar rotaï¿½ï¿½o
+		} else if (chave > nodo.chave) {
 			nodo.direito = inserir0(nodo.direito, chave);
-		else
+			// TODO: verificar se houve desequilï¿½brio
+			// TODO: realizar rotaï¿½ï¿½o
+		} else
 			throw new IllegalArgumentException("Chave duplicada");
 
 		nodo.altura = Math.max(h(nodo.esquerdo), h(nodo.direito)) + 1;
@@ -60,7 +64,7 @@ public class ArvoreBinariaDePesquisa {
 
 		int delta = getAltura0(nodo.esquerdo) - getAltura0(nodo.direito);
 		String msg = String
-				.format("%d  nível= ? altura= %d delta= %d grau= %d pai= ? tio = ? %n[%s]%n[%s]",
+				.format("%d  nÃ­vel= ? altura= %d delta= %d grau= %d pai= ? tio = ? %n[%s]%n[%s]",
 						nodo.chave, getAltura0(nodo), delta, grau(nodo),
 						toString0(nodo.esquerdo), toString0(nodo.direito));
 
