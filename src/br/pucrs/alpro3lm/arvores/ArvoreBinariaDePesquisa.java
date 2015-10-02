@@ -33,12 +33,12 @@ public class ArvoreBinariaDePesquisa {
 
 		if (chave < nodo.chave) {
 			nodo.esquerdo = inserir0(nodo.esquerdo, chave);
-			// TODO: verificar se houve desequil�brio
-			// TODO: realizar rota��o
+			// TODO: verificar se houve desequilíbrio
+			// TODO: realizar rotação
 		} else if (chave > nodo.chave) {
 			nodo.direito = inserir0(nodo.direito, chave);
-			// TODO: verificar se houve desequil�brio
-			// TODO: realizar rota��o
+			// TODO: verificar se houve desequilíbrio
+			// TODO: realizar rotação
 		} else
 			throw new IllegalArgumentException("Chave duplicada");
 
