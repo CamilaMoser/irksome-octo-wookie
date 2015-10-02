@@ -7,9 +7,9 @@ public class TesteArvoreBinariaDePesquisa {
 		System.out.println("Teste");
 		
 		ArvoreBinariaDePesquisa arvore = new ArvoreBinariaDePesquisa();
+		arvore.inserir(30);
 		arvore.inserir(10);
 		arvore.inserir(20);
-		arvore.inserir(30);
 		
 		System.out.println(arvore);
 		System.out.println(arvore.isEquilibrada());

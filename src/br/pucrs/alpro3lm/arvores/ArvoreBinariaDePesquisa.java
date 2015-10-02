@@ -33,22 +33,64 @@ public class ArvoreBinariaDePesquisa {
 
 		if (chave < nodo.chave) {
 			nodo.esquerdo = inserir0(nodo.esquerdo, chave);
-			// TODO: verificar se houve desequilíbrio
-			// TODO: realizar rotação
+			if (h(nodo.esquerdo) - h(nodo.direito) == 2) {
+				if (chave < nodo.esquerdo.chave) {
+					nodo = rotacionarComFilhoEsquerdo(nodo);
+				} else {
+					nodo = duplaComFilhoEsquerdo(nodo);
+				}
+			}
 		} else if (chave > nodo.chave) {
 			nodo.direito = inserir0(nodo.direito, chave);
-			// TODO: verificar se houve desequilíbrio
-			// TODO: realizar rotação
+			if (h(nodo.esquerdo) - h(nodo.direito) == -2) {
+				if (chave > nodo.direito.chave) {
+				nodo = rotacionarComFilhoDireito(nodo);
+				} else {
+					nodo = duplaComFilhoDireito(nodo);					
+				}
+			}
 		} else
 			throw new IllegalArgumentException("Chave duplicada");
 
 		nodo.altura = Math.max(h(nodo.esquerdo), h(nodo.direito)) + 1;
-		
+
 		return nodo;
 	}
 
+	private Nodo duplaComFilhoDireito(Nodo k1) {
+		k1.direito = rotacionarComFilhoEsquerdo(k1.direito);
+		return rotacionarComFilhoDireito(k1);
+	}
+
+	private Nodo duplaComFilhoEsquerdo(Nodo k3) {
+		k3.esquerdo = rotacionarComFilhoDireito(k3.esquerdo);
+		return rotacionarComFilhoEsquerdo(k3);
+	}
+
+	private Nodo rotacionarComFilhoDireito(Nodo k1) {
+		Nodo k2 = k1.direito;
+		k1.direito = k2.esquerdo;
+		k2.esquerdo = k1;
+
+		k1.altura = Math.max(h(k1.esquerdo), h(k1.direito)) + 1;
+		k2.altura = Math.max(k1.altura, h(k2.direito)) + 1;
+
+		return k2;
+	}
+
+	private Nodo rotacionarComFilhoEsquerdo(Nodo k2) {
+		Nodo k1 = k2.esquerdo;
+		k2.esquerdo = k1.direito;
+		k1.direito = k2;
+
+		k2.altura = Math.max(h(k2.esquerdo), h(k2.direito)) + 1;
+		k1.altura = Math.max(h(k1.esquerdo), k2.altura) + 1;
+
+		return k1;
+	}
+
 	private int h(Nodo nodo) {
-		
+
 		return nodo == null ? -1 : nodo.altura;
 	}
 
@@ -123,9 +165,8 @@ public class ArvoreBinariaDePesquisa {
 
 		if (delta == 2 || delta == -2)
 			return false;
-		
-		return isEquilibrada0(nodo.esquerdo)
-				&& isEquilibrada0(nodo.direito);
+
+		return isEquilibrada0(nodo.esquerdo) && isEquilibrada0(nodo.direito);
 	}
 
 }
