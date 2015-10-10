@@ -6,13 +6,27 @@ public class TesteArvoreBinariaDePesquisa {
 	public static void main(String[] args) {
 		System.out.println("Teste");
 		
-		ArvoreBinariaDePesquisa arvore = new ArvoreBinariaDePesquisa();
-		arvore.inserir(30);
-		arvore.inserir(10);
-		arvore.inserir(20);
+		ArvoreBinariaDePesquisa<Integer> arvore = new ArvoreBinariaDePesquisa<>();
+		arvore.inserir(50);
 		
-		System.out.println(arvore);
-		System.out.println(arvore.isEquilibrada());
+		arvore.inserir(17);
+		arvore.inserir(76);
+		
+		arvore.inserir(9);
+		arvore.inserir(23);
+		arvore.inserir(54);
+		
+		arvore.inserir(14);
+		arvore.inserir(19);
+		arvore.inserir(72);
+		
+		arvore.inserir(12);
+		arvore.inserir(67);
+		
+		arvore.preOrdem();
+		arvore.central();
+		arvore.posOrdem();
+		//System.out.println(arvore.isEquilibrada());
 		
 	}
 }
