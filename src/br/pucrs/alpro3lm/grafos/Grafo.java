@@ -133,9 +133,9 @@ public class Grafo {
 		return marcado[s];
 	}
 
-	private void visitar(int s) {
-		System.out.println(s);
-	}
+//	private void visitar(int s) {
+//		System.out.println(s);
+//	}
 
 	private void marcar(int s) {
 		marcado[s] = true;
@@ -159,4 +159,31 @@ public class Grafo {
 		return s;
 	}
 
+	public void dijkstra() {
+		// TODO:
+	}
+	public void floydWarshall() {
+		// TODO:
+	}	
+	public void prim() {
+		// TODO:
+	}		
+	public void kruskal() {
+		// TODO:
+	}	
+	public void topologica() {
+		// TODO:
+	}
+	public void fordFulkerson() {
+		// TODO:
+	}	
+	public void ciclos() {
+		// TODO:
+	}
+	public void componentes() {
+		// TODO:
+	}	
+	public void caminho() {
+		// TODO:
+	}
 }
