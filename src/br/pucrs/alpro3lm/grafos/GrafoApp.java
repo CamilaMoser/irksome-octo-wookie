@@ -5,6 +5,7 @@ public class GrafoApp {
 	public static void main(String[] args) {
 //		Grafo g1 = new Grafo(5);
 		Grafo g1 = new Grafo(7);
+		//Grafo g1 = new Grafo("g1.txt");
 
 		System.out.println(g1);	
 		
