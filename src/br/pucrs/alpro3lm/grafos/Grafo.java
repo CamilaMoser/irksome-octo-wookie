@@ -1,8 +1,14 @@
 package br.pucrs.alpro3lm.grafos;
 
+import java.util.List;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
+
 public class Grafo {
 
 	private int m[][];
+	private boolean[] marcado;
 
 	public Grafo(int nodos) {
 		if (nodos <= 0)
@@ -26,12 +32,92 @@ public class Grafo {
 			throw new IllegalArgumentException("Nodo inválido: " + a);
 	}
 
+	// Caminhamento em largura
+	public List<Integer> largura(int s) {
+		List<Integer> r = new ArrayList<>();
+		limpar();
+		Queue<Integer> q = new LinkedList<>();
+
+		//visitar(s); // 1. Visite um nodo arbitrário
+		r.add(s);
+		marcar(s); // 2. [Marque o nodo] e [coloque-o em uma fila Q]
+		q.add(s);
+		// 3. Enquanto a fila Q não estiver vazia
+		while (!q.isEmpty()) {
+			int n = q.remove(); // 4. Retire um elemento N de Q
+			// 5. Para cada nodo M (não marcado) adjacente a N
+			for (int m : adjacentes(n)) {
+				if (!isMarcado(m)) {
+					//visitar(m); // 6. Visite M
+					r.add(m);
+					q.add(m); // 7. Coloque M na fila Q
+					marcar(m); // 8. Marque M
+				}
+			}
+		}
+		return r;
+	}
+
+	private void limpar() {
+		marcado = new boolean[m.length];
+	}
+
+	// Caminhamento em profundidade
+	// 1. Visite um nodo arbitrário
+	// 2. Marque o nodo e coloque-o em uma pilha S
+	// 3. Enquanto a pilha S não estiver vazia
+	// 4. Retire um elemento N de S
+	// 5. Para cada nodo M (não marcado) adjacente a N
+	// 6. Visite M
+	// 7. Coloque N na pilha S
+	// 8. Marque M
+	// 9. Faça N = M
+	public List<Integer> profundidade(int s) {
+		List<Integer> r = new ArrayList<>();
+
+		limpar();
+		profundidade0(s, r);
+		return r;
+	}
+
+	private void profundidade0(int s, List<Integer> r) {
+		//visitar(s);
+		r.add(s);
+		marcar(s);
+		for (int m : adjacentes(s)) {
+			if (!isMarcado(m))
+				profundidade0(m, r);
+		}
+	}
+
+	private List<Integer> adjacentes(int n) {
+		List<Integer> r = new ArrayList<>();
+		for (int i = 0; i < m.length; i++) {
+			if (m[n][i] != 0) {
+				r.add(i);
+			}
+		}
+		return r;
+	}
+
+	private boolean isMarcado(int s) {
+		return marcado[s];
+	}
+
+	private void visitar(int s) {
+		System.out.println(s);
+	}
+
+	private void marcar(int s) {
+		marcado[s] = true;
+	}
+
 	@Override
 	public String toString() {
 		String s = "";
 		s += "    ";
 		for (int i = 1; i < m.length; i++) {
-			s += i +" ";
+			s += i + " ";
 		}
 		s += "\n";
 		for (int i = 1; i < m.length; i++) {
