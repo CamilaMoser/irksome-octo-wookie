@@ -29,7 +29,12 @@ public class GrafoApp {
 		g1.adicionarArco(3, 5);
 		
 		System.out.println(g1);
+		
+		System.out.println("Largura:");
 		System.out.println(g1.largura(1));
+		System.out.println("Distância Dois");
+		System.out.println(g1.getAllToTwoR(1));
+		System.out.println("Profundidade:");
 		System.out.println(g1.profundidade(1));
 
 	}

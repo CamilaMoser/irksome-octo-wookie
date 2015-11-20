@@ -15,7 +15,7 @@ public class Grafo {
 
 	public Grafo(int nodos) {
 		if (nodos <= 0)
-			throw new IllegalArgumentException("Número de nodos inválido: "
+			throw new IllegalArgumentException("Nï¿½mero de nodos invï¿½lido: "
 					+ nodos);
 		m = new int[nodos + 1][nodos + 1];
 	}
@@ -53,12 +53,12 @@ public class Grafo {
 		m[a][b] = v;
 		// m[b][a] = v;
 		// acrescentar aresta de retorno
-		// no caso de não-dirigido
+		// no caso de nï¿½o-dirigido
 	}
 
 	private void verificar(int a) {
 		if (a <= 0 || a > m.length)
-			throw new IllegalArgumentException("Nodo inválido: " + a);
+			throw new IllegalArgumentException("Nodo invï¿½lido: " + a);
 	}
 
 	// Caminhamento em largura
@@ -67,14 +67,14 @@ public class Grafo {
 		limpar();
 		Queue<Integer> q = new LinkedList<>();
 
-		// visitar(s); // 1. Visite um nodo arbitrário
+		// visitar(s); // 1. Visite um nodo arbitrï¿½rio
 		r.add(s);
 		marcar(s); // 2. [Marque o nodo] e [coloque-o em uma fila Q]
 		q.add(s);
-		// 3. Enquanto a fila Q não estiver vazia
+		// 3. Enquanto a fila Q nï¿½o estiver vazia
 		while (!q.isEmpty()) {
 			int n = q.remove(); // 4. Retire um elemento N de Q
-			// 5. Para cada nodo M (não marcado) adjacente a N
+			// 5. Para cada nodo M (nï¿½o marcado) adjacente a N
 			for (int m : adjacentes(n)) {
 				if (!isMarcado(m)) {
 					// visitar(m); // 6. Visite M
@@ -92,15 +92,15 @@ public class Grafo {
 	}
 
 	// Caminhamento em profundidade
-	// 1. Visite um nodo arbitrário
+	// 1. Visite um nodo arbitrï¿½rio
 	// 2. Marque o nodo e coloque-o em uma pilha S
-	// 3. Enquanto a pilha S não estiver vazia
+	// 3. Enquanto a pilha S nï¿½o estiver vazia
 	// 4. Retire um elemento N de S
-	// 5. Para cada nodo M (não marcado) adjacente a N
+	// 5. Para cada nodo M (nï¿½o marcado) adjacente a N
 	// 6. Visite M
 	// 7. Coloque N na pilha S
 	// 8. Marque M
-	// 9. Faça N = M
+	// 9. Faï¿½a N = M
 	public List<Integer> profundidade(int s) {
 		List<Integer> r = new ArrayList<>();
 
@@ -133,9 +133,9 @@ public class Grafo {
 		return marcado[s];
 	}
 
-//	private void visitar(int s) {
-//		System.out.println(s);
-//	}
+	// private void visitar(int s) {
+	// System.out.println(s);
+	// }
 
 	private void marcar(int s) {
 		marcado[s] = true;
@@ -162,28 +162,81 @@ public class Grafo {
 	public void dijkstra() {
 		// TODO:
 	}
+
 	public void floydWarshall() {
 		// TODO:
-	}	
+	}
+
 	public void prim() {
 		// TODO:
-	}		
+	}
+
 	public void kruskal() {
 		// TODO:
-	}	
+	}
+
 	public void topologica() {
 		// TODO:
 	}
+
 	public void fordFulkerson() {
 		// TODO:
-	}	
+	}
+
 	public void ciclos() {
 		// TODO:
 	}
+
 	public void componentes() {
 		// TODO:
-	}	
+	}
+
 	public void caminho() {
 		// TODO:
+	}
+
+	// Retornar a lista de nodos que se encontra atÃ© uma distÃ¢ncia
+	// dois, a partir do nodo passado por parÃ¢metro
+	public List<Integer> getAllToTwo(int s) {
+		List<Integer> r = new LinkedList<>();
+		limpar();
+		List<Integer> n1 = new LinkedList<>();
+		List<Integer> n2 = new LinkedList<>();
+		marcar(s);
+		r.add(s);
+		for (int m : adjacentes(s)) {
+			n1.add(m);
+			marcar(m);
+		}
+		r.addAll(n1);
+		while (!n1.isEmpty()) {
+			int n = n1.remove(0);
+			for (int m : adjacentes(n))
+				if (!isMarcado(m)) {
+					n2.add(m);
+					marcar(m);
+				}
+		}
+		r.addAll(n2);
+		return r;
+	}
+
+	public List<Integer> getAllToTwoR(int s) {
+		List<Integer> r = new ArrayList<>();
+		limpar();
+		getAllToTwoR0(s, r, 0, 2);
+		return r;	
+	}
+
+	private void getAllToTwoR0(int s, List<Integer> r, int c, int n) {
+		if (c > n)
+			return;
+		r.add(s);
+		marcar(s);
+		for (int m : adjacentes(s)) {
+			if (!isMarcado(m))
+				getAllToTwoR0(m, r, c + 1, n);
+		}
+		
 	}
 }
