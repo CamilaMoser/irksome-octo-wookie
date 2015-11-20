@@ -19,23 +19,25 @@ public class GrafoApp {
 //		g1.adicionarArco(4, 2);		
 		
 		//
-		g1.adicionarArco(1, 2);
-		g1.adicionarArco(1, 7);
-		g1.adicionarArco(2, 3);
+		g1.adicionarArco(1, 2, 1);
+		g1.adicionarArco(1, 7, 3);
+		g1.adicionarArco(2, 3, 6);
 		
-		g1.adicionarArco(2, 6);
+		g1.adicionarArco(2, 6, 5);
 
-		g1.adicionarArco(3, 4);
-		g1.adicionarArco(3, 5);
+		g1.adicionarArco(3, 4, 1);
+		g1.adicionarArco(3, 5, 2);
 		
 		System.out.println(g1);
+		//
 		
 		System.out.println("Largura:");
 		System.out.println(g1.largura(1));
-		System.out.println("Distância Dois");
-		System.out.println(g1.getAllToTwoR(1));
-		System.out.println("Profundidade:");
-		System.out.println(g1.profundidade(1));
+		//System.out.println("Distância Dois");
+		//System.out.println(g1.getAllToTwoR(1));
+		//System.out.println("Profundidade:");
+		//System.out.println(g1.profundidade(1));
+		g1.dijkstra(3);
 
 	}
 }

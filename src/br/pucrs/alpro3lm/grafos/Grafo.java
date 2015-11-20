@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -51,7 +52,7 @@ public class Grafo {
 		verificar(a);
 		verificar(b);
 		m[a][b] = v;
-		// m[b][a] = v;
+		m[b][a] = v;
 		// acrescentar aresta de retorno
 		// no caso de n�o-dirigido
 	}
@@ -159,8 +160,59 @@ public class Grafo {
 		return s;
 	}
 
-	public void dijkstra() {
-		// TODO:
+	public void dijkstra(int v) {
+		int d[] = new int[m.length];
+		int p[] = new int[m.length];
+
+		// INITIALIZE
+		for (int i = 1; i < d.length; i++) {
+			d[i] = Integer.MAX_VALUE / 3;
+			p[i] = -1;
+		}
+		d[v] = 0;
+		
+		Queue<Integer> q = new LinkedList<>();
+		limpar();
+		marcar(v); // 2. [Marque o nodo] e [coloque-o em uma fila Q]
+		q.add(v);
+		while (!q.isEmpty()) {
+			int n = removeMin(q, d); // 4. Retire um elemento N de Q
+			for (int m : adjacentes(n)) {
+				if (!isMarcado(m)) {
+					//RELAX
+					if (d[n] + w(n, m) < d[m]) {
+						d[m] = d[n] + w(n, m);
+						p[m] = n;
+					}
+					q.add(m); 
+					marcar(m); 
+				}
+			}		
+		}
+		
+		System.out.println("Distancias (3) Dijkstra:");
+		System.out.println(Arrays.toString(d));
+		System.out.println("Predecessores(3) Dijkstra:");
+		System.out.println(Arrays.toString(p));
+	}
+
+	private int w(int u, int v) {
+		return m[u][v] == 0 ? Integer.MAX_VALUE / 3: m[u][v];
+	}
+
+	private int removeMin(Queue<Integer> q, int[] d) {
+		List<Integer> lista = new ArrayList<>(q);
+		int min = lista.get(0);
+		for (int i = 0; i < lista.size(); i++)
+			if (d[min] > d[lista.get(i)])
+				min = lista.get(i);
+		
+		// remove o elemento com menor d da fila
+		// q.removeObject(min);
+		// q.removeAt(i);		
+		q.remove(new Integer(min));
+		
+		return min;
 	}
 
 	public void floydWarshall() {
@@ -225,7 +277,7 @@ public class Grafo {
 		List<Integer> r = new ArrayList<>();
 		limpar();
 		getAllToTwoR0(s, r, 0, 2);
-		return r;	
+		return r;
 	}
 
 	private void getAllToTwoR0(int s, List<Integer> r, int c, int n) {
@@ -237,6 +289,6 @@ public class Grafo {
 			if (!isMarcado(m))
 				getAllToTwoR0(m, r, c + 1, n);
 		}
-		
+
 	}
 }
