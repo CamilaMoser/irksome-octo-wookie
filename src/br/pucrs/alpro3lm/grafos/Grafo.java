@@ -5,6 +5,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -271,8 +272,45 @@ public class Grafo {
 		}
 	}
 
-	public void fordFulkerson() {
-		// TODO:
+	public int fordFulkerson(int f, int s) {
+		// copiar m
+		int d[][] = new int[m.length][m.length];
+		for (int i = 0; i < d.length; i++) { // copiar matriz m
+			for (int j = 0; j < d.length; j++) {
+				d[i][j] = m[i][j];
+			}
+		}
+		
+		//int f = 0;
+		//int s = 0;
+		// encontrar fonte e sumidouro (rede)
+		
+		// enquanto existe caminho entre f e s
+			// remove uma unidade de capacidade do caminho
+		List<Integer> c = caminho(f, s, d);
+		while ( !c.isEmpty()) {
+			System.out.println(c);
+			for (int b = 1; b < c.size(); b++) {
+				d[c.get(b - 1)][c.get(b)]--;
+			}
+			c = caminho(f, s, d);
+		}
+		
+		// calcular vazao
+		int capacidade = 0;
+		int residual = 0;
+
+		for (int j = 0; j < d.length; j++) {
+			residual += d[f][j];
+		}
+		for (int j = 0; j < d.length; j++) {
+			capacidade += m[f][j];
+		}
+		
+		int vazao = capacidade - residual;
+		
+		
+		return vazao;
 	}
 
 	public void ciclos() {
@@ -283,8 +321,36 @@ public class Grafo {
 		// TODO:
 	}
 
-	public void caminho() {
-		// TODO:
+
+	public List<Integer> caminho(int a, int b) {
+		return caminho(a, b, m);
+	}
+	
+	private List<Integer> caminho(int a, int b, int mat[][]) {
+		List<Integer> c = new ArrayList<>();
+		
+		boolean r = caminho0(a, b, c, mat);
+		Collections.reverse(c);
+		return c;
+	}
+
+	private boolean caminho0(int a, int b, List<Integer> c, int mat[][]) {
+		if (a == b) {
+			c.add(b);
+			return true;
+		}
+		
+		for (int j = 0; j < mat.length; j++) {
+			if (mat[a][j] != 0) {
+				if (caminho0(j, b, c, mat)) {
+					c.add(a);
+					return true;
+				}
+			}
+		}
+		
+		return false;
+		
 	}
 
 	// Retornar a lista de nodos que se encontra até uma distância

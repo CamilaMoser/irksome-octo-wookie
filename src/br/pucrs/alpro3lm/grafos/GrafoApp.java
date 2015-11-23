@@ -57,7 +57,11 @@ public class GrafoApp {
 		
 		System.out.println(g1);
 		
-		System.out.println(g1.topologica());
+		//System.out.println(g1.topologica());
+		//System.out.println(g1.caminho(1, 9));
+		System.out.println(g1.fordFulkerson(1, 9));
+		
+		
 		
 		//
 		
