@@ -5,9 +5,11 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
+import java.util.Set;
 
 public class Grafo {
 
@@ -52,7 +54,7 @@ public class Grafo {
 		verificar(a);
 		verificar(b);
 		m[a][b] = v;
-		m[b][a] = v;
+		// m[b][a] = v;
 		// acrescentar aresta de retorno
 		// no caso de n�o-dirigido
 	}
@@ -170,7 +172,7 @@ public class Grafo {
 			p[i] = -1;
 		}
 		d[v] = 0;
-		
+
 		Queue<Integer> q = new LinkedList<>();
 		limpar();
 		marcar(v); // 2. [Marque o nodo] e [coloque-o em uma fila Q]
@@ -179,17 +181,17 @@ public class Grafo {
 			int n = removeMin(q, d); // 4. Retire um elemento N de Q
 			for (int m : adjacentes(n)) {
 				if (!isMarcado(m)) {
-					//RELAX
+					// RELAX
 					if (d[n] + w(n, m) < d[m]) {
 						d[m] = d[n] + w(n, m);
 						p[m] = n;
 					}
-					q.add(m); 
-					marcar(m); 
+					q.add(m);
+					marcar(m);
 				}
-			}		
+			}
 		}
-		
+
 		System.out.println("Distancias (3) Dijkstra:");
 		System.out.println(Arrays.toString(d));
 		System.out.println("Predecessores(3) Dijkstra:");
@@ -197,7 +199,7 @@ public class Grafo {
 	}
 
 	private int w(int u, int v) {
-		return m[u][v] == 0 ? Integer.MAX_VALUE / 3: m[u][v];
+		return m[u][v] == 0 ? Integer.MAX_VALUE / 3 : m[u][v];
 	}
 
 	private int removeMin(Queue<Integer> q, int[] d) {
@@ -206,12 +208,12 @@ public class Grafo {
 		for (int i = 0; i < lista.size(); i++)
 			if (d[min] > d[lista.get(i)])
 				min = lista.get(i);
-		
+
 		// remove o elemento com menor d da fila
 		// q.removeObject(min);
-		// q.removeAt(i);		
+		// q.removeAt(i);
 		q.remove(new Integer(min));
-		
+
 		return min;
 	}
 
@@ -227,8 +229,46 @@ public class Grafo {
 		// TODO:
 	}
 
-	public void topologica() {
-		// TODO:
+	public List<Integer> topologica() {
+		List<Integer> L = new ArrayList<>();
+		List<Integer> S = new ArrayList<>();
+		int m2[][] = new int[m.length][m.length];
+		for (int i = 0; i < m2.length; i++) { // copiar matriz m
+			for (int j = 0; j < m2.length; j++) {
+				m2[i][j] = m[i][j];
+			}
+		}
+		atualizarS(S, m2); // iniciar S com nodos de grau de entrada zero
+		while (!S.isEmpty()) {
+			int n = S.remove(0);
+			L.add(n);
+			for (int j = 1; j < m2.length; j++) {
+				if (m2[n][j] != 0) {
+					m2[n][j] = 0;
+					verificarNodoSemEntradas(S, m2, j);
+				}
+			}
+		}
+		return L;
+	}
+
+	private void verificarNodoSemEntradas(List<Integer> S, int[][] m2, int j) {
+		int c = 0;
+		for (int i = 1; i < m2.length; i++) {
+			if (m2[i][j] != 0) {
+				c++;
+			}
+		}
+		if (c == 0) {
+			S.add(j);
+		}
+	}
+
+	private void atualizarS(List<Integer> S, int[][] m2) {
+		S.clear();
+		for (int j = 1; j < m2.length; j++) {
+			verificarNodoSemEntradas(S, m2, j);
+		}
 	}
 
 	public void fordFulkerson() {
