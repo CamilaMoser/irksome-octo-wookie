@@ -175,20 +175,16 @@ public class Grafo {
 		d[v] = 0;
 
 		Queue<Integer> q = new LinkedList<>();
-		limpar();
-		marcar(v); // 2. [Marque o nodo] e [coloque-o em uma fila Q]
-		q.add(v);
+		for (int i = 1; i < d.length; i++) {
+			q.add(i);
+		}
 		while (!q.isEmpty()) {
 			int n = removeMin(q, d); // 4. Retire um elemento N de Q
 			for (int m : adjacentes(n)) {
-				if (!isMarcado(m)) {
-					// RELAX
-					if (d[n] + w(n, m) < d[m]) {
-						d[m] = d[n] + w(n, m);
-						p[m] = n;
-					}
-					q.add(m);
-					marcar(m);
+				// RELAX
+				if (d[n] + w(n, m) < d[m]) {
+					d[m] = d[n] + w(n, m);
+					p[m] = n;
 				}
 			}
 		}
@@ -197,6 +193,22 @@ public class Grafo {
 		System.out.println(Arrays.toString(d));
 		System.out.println("Predecessores(3) Dijkstra:");
 		System.out.println(Arrays.toString(p));
+
+		decodificarCaminhos(d, p);
+
+	}
+
+	private void decodificarCaminhos(int[] d, int[] p) {
+		for (int i = 1; i < d.length; i++) {
+			System.out.printf("%c : %d\n", 'A' + (i - 1), d[i]);
+			int v = i;
+			while (v != -1) {
+				System.out.println(v);
+				v = p[v];
+			//	System.out.println(v);
+			}
+		}
+
 	}
 
 	private int w(int u, int v) {
@@ -206,7 +218,7 @@ public class Grafo {
 	private int removeMin(Queue<Integer> q, int[] d) {
 		List<Integer> lista = new ArrayList<>(q);
 		int min = lista.get(0);
-		for (int i = 0; i < lista.size(); i++)
+		for (int i = 1; i < lista.size(); i++)
 			if (d[min] > d[lista.get(i)])
 				min = lista.get(i);
 
@@ -280,22 +292,22 @@ public class Grafo {
 				d[i][j] = m[i][j];
 			}
 		}
-		
-		//int f = 0;
-		//int s = 0;
+
+		// int f = 0;
+		// int s = 0;
 		// encontrar fonte e sumidouro (rede)
-		
+
 		// enquanto existe caminho entre f e s
-			// remove uma unidade de capacidade do caminho
+		// remove uma unidade de capacidade do caminho
 		List<Integer> c = caminho(f, s, d);
-		while ( !c.isEmpty()) {
+		while (!c.isEmpty()) {
 			System.out.println(c);
 			for (int b = 1; b < c.size(); b++) {
 				d[c.get(b - 1)][c.get(b)]--;
 			}
 			c = caminho(f, s, d);
 		}
-		
+
 		// calcular vazao
 		int capacidade = 0;
 		int residual = 0;
@@ -306,10 +318,9 @@ public class Grafo {
 		for (int j = 0; j < d.length; j++) {
 			capacidade += m[f][j];
 		}
-		
+
 		int vazao = capacidade - residual;
-		
-		
+
 		return vazao;
 	}
 
@@ -321,14 +332,13 @@ public class Grafo {
 		// TODO:
 	}
 
-
 	public List<Integer> caminho(int a, int b) {
 		return caminho(a, b, m);
 	}
-	
+
 	private List<Integer> caminho(int a, int b, int mat[][]) {
 		List<Integer> c = new ArrayList<>();
-		
+
 		boolean r = caminho0(a, b, c, mat);
 		Collections.reverse(c);
 		return c;
@@ -339,7 +349,7 @@ public class Grafo {
 			c.add(b);
 			return true;
 		}
-		
+
 		for (int j = 0; j < mat.length; j++) {
 			if (mat[a][j] != 0) {
 				if (caminho0(j, b, c, mat)) {
@@ -348,9 +358,9 @@ public class Grafo {
 				}
 			}
 		}
-		
+
 		return false;
-		
+
 	}
 
 	// Retornar a lista de nodos que se encontra até uma distância
